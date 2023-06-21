@@ -27,7 +27,7 @@ const Chat= require('./models/chat.model')
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(session({
-    secret:SESSION_SECRET,
+    secret:SESSION_SECRET|| 'ifitfeelslikehome',
     resave:false,
     saveUninitialized:false,
 })); 
