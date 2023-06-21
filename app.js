@@ -3,7 +3,7 @@ const mongoose= require('mongoose');
 require('dotenv').config();
 const app= require('express')();
 const userRoute= require('./routes/user.route')
-mongoose.connect(process.env.DB_URL);
+mongoose.connect('mongodb+srv://mark:mark2022.aa@cluster0.jp9mo9v.mongodb.net/?retryWrites=true&w=majority');
 
 const bodyParser= require('body-parser');
 const path= require('path');
