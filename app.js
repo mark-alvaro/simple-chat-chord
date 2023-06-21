@@ -2,16 +2,22 @@ const express= require('express');
 const mongoose= require('mongoose');
 require('dotenv').config();
 const app= require('express')();
-const userRoute= require('./routes/user.route')
+const userRoute= require('./routes/user.route');
+
+const path= require('path');
+// static Files
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static( path.join(__dirname, 'uploads')))
+
 mongoose.connect('mongodb+srv://mark:mark2022.aa@cluster0.jp9mo9v.mongodb.net/?retryWrites=true&w=majority');
 
 const bodyParser= require('body-parser');
-const path= require('path');
 const session= require('express-session')
 // cookie Parser
 const cookieParser= require('cookie-parser')
 const {SESSION_SECRET}= process.env;
-app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 

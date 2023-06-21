@@ -17,6 +17,7 @@ const register= async (req,res)=>{
 
 const createAccount= async (req,res)=>{
     const {name, email, password1, password2}= req.body;
+    const image= req.file;
     if(!(name, email, password1, password2)){
        return res.redirect('/register')
     }
@@ -28,7 +29,8 @@ const hashedPassword= await bcrypt.hash(password1,12);
         const newUser= new User({
             name:name,
             email:email,
-            password:hashedPassword
+            password:hashedPassword,
+            image:image.filename
         });
 
 await newUser.save();
@@ -57,6 +59,7 @@ const signIn= async (req,res)=>{
     if(!userdata){
         return res.redirect('/login');
     }
+
     else{
         const rightUser=  bcrypt.compare(password1, userdata.password)
         .then((user)=>{
@@ -85,13 +88,14 @@ const Logout= async (req,res)=>{
 // for saving chatting message
 const saveChat= async (req,res)=>{
     const {sender_id, reciver_id, message}= req.body;
+    const user= await User.findById({_id:sender_id});
     const chatMessage= new Chat({
         sender_id:sender_id,
         reciver_id:reciver_id,
         message:message
     });
    const newChat= await chatMessage.save();
-    res.send({success:true,data:newChat});
+    res.send({success:true,data:newChat,user:user});
     
 }
 

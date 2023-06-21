@@ -13,6 +13,10 @@ const userSchema= mongoose.Schema({
         type:String,
         required:true
     },
+    image:{
+        type:String,
+        required:true
+    },
     is_online:{
         type:String,
         default:'0'

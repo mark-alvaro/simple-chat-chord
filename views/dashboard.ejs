@@ -38,14 +38,14 @@
             <nav id="sidebar">
                <div class="sidebar_blog_1">
                   <div class="sidebar-header">
-                     <div class="logo_section">
-                        <a href="index.html"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
-                     </div>
+                     
                   </div>
                   <div class="sidebar_user_info">
                      <div class="icon_setting"></div>
                      <div class="user_profle_side">
-                        <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
+                        <div class="user_img">
+                           <img class="img-responsive" src="/uploads/<%= user.image%>" height="70px"/>
+                        </div>
                         <div class="user_info">
                            <h6><%= user.name%></h6>
                            <p><span class="online_animation"></span></p>
@@ -78,7 +78,7 @@
                             <ul class="list-group">
                                     <% for (let i= 0; i < users.length; i++ ) {%>
                                         <li class="list-group-item list-group-item-dark user-list" style="cursor: pointer;" data-id="<%= users[i]._id%>">
-                                            <img src="images/layout_img/msg4.png" alt="" width="40px" height="30px" style="border-radius: 50%;"> 
+                                            <img src="/uploads/<%= users[i].image%>" alt="" width="40px" height="30px" style="border-radius: 50%;"> 
                                             <% if( users[i].is_online == 1) {%>
                                              <span class="online_animation" id="<%= users[i]._id%>"></span>
                                           <%} else {%>
@@ -246,8 +246,10 @@
                      if(response.success){
                         $("#message").val();
                         let chat= response.data.message;
+                        let user= response.user.image;
                         let html=`
                            <div class="" id='`+ response.data._id +`'>
+                              <img src="/uploads/`+ user +`"  width="50px" height="30px" style="float:right; border-radius:50%;"/>
                               <h6 class="my-5"><span class="bg-primary p-2 float-right" style="border-radius: 5px;">`+ chat +`</span>
                                  </h6>
                                  <i class=" fa fa-trash user-trash text-danger float-right" data-toggle="modal" data-target="#deleteChatModel" data-id='`+ response.data._id +`' ></i>

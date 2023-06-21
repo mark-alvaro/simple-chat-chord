@@ -34,7 +34,7 @@
                       </div>
                       <div class="container" style="background-color: #00ffcf08 !important;;">
                         <h1 class="text-danger text-center mt-2">Register</h1>
-                        <form action="" method="POST" class="form-control m-5" style="background-color: #00ffcf08 !important;;">
+                        <form action="" method="POST" class="form-control m-5" style="background-color: #00ffcf08 !important;;" enctype="multipart/form-data">
                             <label for="label" class="form-label">Enter Name</label>
                             <input type="text" name="name" placeholder="Enter Name Here" class="form-control" required>
                             <label for="label" class="form-label">Enter Email</label>
@@ -43,7 +43,8 @@
                             <input type="password" name="password1" placeholder="Enter Password Here" class="form-control" required>
                             <label for="label" class="form-label">ReEnter Name</label>
                             <input type="password" name="password2" placeholder="Reenter Password Here" class="form-control" required>
-                            
+                            <label for="label" class="form-label">Upload Profile Image</label>
+                              <input type="file" class="form-control" name="image">
                             <input type="submit" class="btn btn-primary my-3" value="Register">
                             <h6>Already have an accout  <a href="/login" class="text-success "><span > Login</span></a></h6>
                         </form>

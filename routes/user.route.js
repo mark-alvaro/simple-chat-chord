@@ -2,9 +2,10 @@ const express= require('express');
 const router= express.Router();
 const userController= require('../controllers/user.controller')
 const auth= require('../middlewares/auth')
+const store=require('../middlewares/multer')
 router.get('/', userController.getDash)
 router.get('/register',auth.isLogout, userController.register);
-router.post('/register', userController.createAccount);
+router.post('/register',store.single('image',12), userController.createAccount);
 
 router.get('/login',  auth.isLogout,userController.login);
 router.post('/login', userController.signIn)
