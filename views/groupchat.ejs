@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>Chat Service</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- site icon -->
+      <link rel="icon" href="/images/fevicon.png" type="image/png" />
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      <!-- site css -->
+      <link rel="stylesheet" href="/style.css" />
+      <!-- responsive css -->
+      <link rel="stylesheet" href="/css/responsive.css" />
+      <!-- color css -->
+
+      <!-- scrollbar css -->
+      <link rel="stylesheet" href="/css/perfect-scrollbar.css" />
+      <!-- custom css -->
+      <link rel="stylesheet" href="/css/custom.css" />
+      <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+   </head>
+   <body class="dashboard dashboard_1">
+      <div class="full_container">
+         <div class="inner_container">
+            <!-- Sidebar  -->
+            <nav id="sidebar">
+               <div class="sidebar_blog_1">
+                  <div class="sidebar-header">
+                     <div class="logo_section">
+                        <a href="index.html"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                     </div>
+                  </div>
+                  <div class="sidebar_user_info">
+                     <div class="icon_setting"></div>
+                     <div class="user_profle_side">
+                        <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
+                        <div class="user_info">
+                            <h6><%= user.name%></h6>
+                           <p><span class="online_animation"></span></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="sidebar_blog_2">
+                  <h4>Chat System</h4>
+                  <ul class="list-unstyled components">
+                    
+                     <li><a href="/dashboard"><i class="fa fa-home orange_color"></i> <span>Chat</span></a></li>
+                     <li><a href="/groups"><i class="fa fa-group orange_color"></i> <span>Groups</span></a></li>
+                     <li><a href="/logout"><i class="fa fa-sign-out purple_color2"></i> <span>Logout</span></a></li>
+                    
+                     
+                  </ul>
+               </div>
+            </nav>
+            <!-- end sidebar -->
+            <!-- right content -->
+            <div id="content">
+                <div class="bg-primary py-3 px-2">
+                    <h3 class="text-white group-name" ><%= groupName.name%>
+                        <input type="button" class="btn btn-success float-right text-white" id="group-chat"  data-toggle="modal" data-target="#createGroupModal"  value="Start Chat"></h3>
+                   
+                 </div>
+              
+               <!-- dashboard inner -->
+               <div class="midde_cont">
+                    <div class="container-fluid">
+                      
+                    
+
+
+<!-- model -->
+
+<div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 800px;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Chat Here</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       <!-- model form adding group -->
+    
+            <div class="modal-body">
+                <div id="group-chat-container" style="background-color: skyblue;width: 100%;
+                height: 400px; overflow: scroll;">
+              
+                    <div class="m-5">
+                      <!-- current user chat -->
+                  
+                      <!-- end current user chat -->
+                      <!-- dynamic user chat -->
+                      
+                      <!-- end dynamic user chat -->
+                    </div>
+                </div>
+                <form action="" id="group-chat-form" >
+                    <input type="text" id="group-message" class="message w-50 border" placeholder="Enter message" required>
+                    <button type="submit" class="btn btn-sm btn-success"> <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                </form>
+            </div>
+            </div>
+     
+       <!-- end adding group modal form  -->
+      </div>
+    </div>
+  </div>
+
+<!-- end model -->
+
+                  <!-- footer -->
+                  <div class="container-fluid">
+                     <div class="footer">
+                        <p>Copyright © 2018 Designed by html.design. All rights reserved.<br><br>
+                           Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
+                        </p>
+     </div>
+         </div>
+</div>
+               <!-- end dashboard inner -->
+            </div>
+         </div>
+      </div>
+    
+      
+      <!-- jQuery -->
+      <!-- <script src="/js/jquery.min.js"></script> -->
+      <script src="/js/popper.min.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+      <!-- wow animation -->
+      <script src="/js/animate.js"></script>
+      <!-- select country -->
+      <script src="/js/bootstrap-select.js"></script>
+    
+      <script src="/js/utils.js"></script>
+      <script src="/js/analyser.js"></script>
+      <!-- nice scrollbar -->
+      <script src="/js/perfect-scrollbar.min.js"></script>
+      <script>
+         var ps = new PerfectScrollbar('#sidebar');
+      </script>
+      <!-- custom js -->
+      <script src="/js/custom.js"></script>
+      <script src="/js/chart_custom_style1.js"></script>
+        <!-- Custom jqurey for chat Box -->
+        
+     <script>
+        
+       
+       
+               const socket= io('/user-namespace',{
+               auth:{
+                  token: '<%= user._id%>'
+               }
+            });
+            let sender_id= '<%= user._id%>';
+            let global_group_id= '<%= id%>';
+        $(document).ready(function(){
+            $('#group-chat').click(function(){
+                loadGroupChat();
+            })
+        });
+    //chat group chat  saving
+       $('#group-chat-form').submit((event)=>{
+               event.preventDefault();
+              var message=  $('#group-message').val();
+               $.ajax({
+                  url:"/save-group-chat",
+                  type:"POST",
+                  data:{sender_id:sender_id, group_id:global_group_id,message:message},
+                  success:(response)=>{
+                     if(response.success){
+                       $('#group-message').val('');
+                       let groupChat= response.data.message;
+                       let html= `
+                       <div class="current-user-chat">
+                                            <p class=" px-2 py-1 d-block" style="border-radius:5px; text-align:right;">
+                                             <span class="bg-primary px-2 py-1 text-white" style="border-radius:5px">`+ groupChat +`<span>
+                                             </p>
+                                            
+                                        </div> <br>
+                       `;
+                       $('#group-chat-container').append(html);
+
+                       socket.emit('newGroupChat',response.data)
+                       scrollChat()
+                     }
+                     else{
+                        console.log('bb')
+                     }
+                  }
+               })
+            
+            });
+            socket.on('loadNewGroupChat',(data)=>{ 
+               
+                  if(global_group_id == data.group_id){
+                    let html= `
+                       <div class="dynamic-user-chat text-danger" >
+                        <p>
+                     
+                        <span class="btn-primary px-2 py-1" style="border-radius:5px">`+ data.message +`</span>
+                        </p>
+                       </div>`;
+                       $('#group-chat-container').append(html);  
+                       scrollChat() 
+                  }
+                }
+            )
+
+
+            // load old group chat
+           
+              function loadGroupChat(){
+                $.ajax({
+                    url:'/load-group-chat',
+                    type:'POST',
+                    data:{group_id:global_group_id},
+                    success:function(res){
+                        if(res.success){
+                            let chat= res.data;
+                            let html='';
+
+                            for(let i=0; i< chat.length; i++ ){
+                                if(chat[i].sender_id == sender_id){
+                                   
+                                        let html= `
+                                        <div class="current-user-chat">
+                                            <p class=" px-2 py-1 d-block" style="border-radius:5px; text-align:right;">
+                                             <span class="bg-primary px-2 py-1 text-white" style="border-radius:5px">`+ chat[i].message +`<span>
+                                             </p>
+                                            
+                                        </div> <br>`;
+                                        $('#group-chat-container').append(html);   
+                                        scrollChat()
+                                }
+                                else{
+                                   
+                                        let html= `
+                                        <div class="dynamic-user-chat" >
+                                            <p>
+                                            <span class="btn-primary px-2 py-1" style="border-radius:5px">`+ chat[i].message +`</span>
+                                            </p>
+                                        </div>`;
+                                        $('#group-chat-container').append(html);   
+                                        scrollChat()
+                                    }
+                                }
+                            }
+
+
+                           
+                        
+                    }
+                })
+            
+
+              }
+
+
+            // scrollChat static Function
+                    
+            function scrollChat(){
+                        $('#group-chat-container').animate({
+                        scrollTop:$('#group-chat-container').offset().top + $('#group-chat-container')[0].scrollHeight
+                        },0)
+                    }
+
+     </script>
+
+
+   </body>
+</html>

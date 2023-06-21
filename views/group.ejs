@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>Chat Service</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- site icon -->
+      <link rel="icon" href="/images/fevicon.png" type="image/png" />
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      <!-- site css -->
+      <link rel="stylesheet" href="/style.css" />
+      <!-- responsive css -->
+      <link rel="stylesheet" href="/css/responsive.css" />
+      <!-- select bootstrap -->
+      <link rel="stylesheet" href="/css/bootstrap-select.css" />
+      <!-- scrollbar css -->
+      <link rel="stylesheet" href="/css/perfect-scrollbar.css" />
+      <!-- custom css -->
+      <link rel="stylesheet" href="/css/custom.css" />
+      <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   </head>
+   <body class="dashboard dashboard_1">
+      <div class="full_container">
+         <div class="inner_container">
+            <!-- Sidebar  -->
+            <nav id="sidebar">
+               <div class="sidebar_blog_1">
+                  <div class="sidebar-header">
+                     <div class="logo_section">
+                        <a href="index.html"><img class="logo_icon img-responsive" src="/images/logo/logo_icon.png" alt="#" /></a>
+                     </div>
+                  </div>
+                  <div class="sidebar_user_info">
+                     <div class="icon_setting"></div>
+                     <div class="user_profle_side">
+                        <div class="user_img"><img class="img-responsive" src="/images/layout_img/user_img.jpg" alt="#" /></div>
+                        <div class="user_info">
+                            <h6><%= user.name%></h6>
+                           <p><span class="online_animation"></span></p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="sidebar_blog_2">
+                  <h4>Chat System</h4>
+                  <ul class="list-unstyled components">
+                    
+                     <li><a href="/dashboard"><i class="fa fa-home orange_color"></i> <span>Chat</span></a></li>
+                     <li><a href="/groups"><i class="fa fa-group orange_color"></i> <span>Groups</span></a></li>
+                     <li><a href="/logout"><i class="fa fa-sign-out purple_color2"></i> <span>Logout</span></a></li>
+                    
+                     
+                  </ul>
+               </div>
+            </nav>
+            <!-- end sidebar -->
+            <!-- right content -->
+            <div id="content">
+              
+               <!-- dashboard inner -->
+               <div class="midde_cont">
+                    <div class="container">
+                        <!-- Button trigger modal -->
+                        <% if (typeof message !== 'undefined') {%>
+                            <p style="color: green;"><%= message%></p>
+                        <%}%>
+  
+        <ul class="list-group">
+         <div class="row">
+            <div class="col-md-4">
+               <div class="dash_blog">
+                  <div class="dash_blog_inner">
+                     <div class="dash_head"  data-toggle="modal" data-target="#createGroupModal">
+                        <h3><span><i class="fa fa-comments-o"></i> Groups</span><span class="plus_green_bt"><a href="#">+</a></span></h3>
+                     </div>
+                     <div class="msg_list_main">
+                        <ul class="msg_list">
+                           <% if(groups.length <= 0) {%>
+                              <h5 class="text-success mt-3 mx-3">No Group to show</h5>
+                           <%}%>
+                           <% for (let i= 0; i < groups.length; i++ ) {%>
+                           <li class="my-2">
+                              <span><img src="images/layout_img/msg2.png" class="img-responsive" alt="#" /></span>
+                              <span>
+                              <span class="name_user">
+                                 <a href="/group-chat/<%= groups[i]._id%>"><%= groups[i].name%></a>
+                              </span>
+                              <a class="time_ago text-success add-member"
+                               data-toggle="modal" 
+                               data-target="#memberModal" 
+                               style="cursor: pointer"
+                              data-id="<%= groups[i]._id%>"
+                              data-limit="<%= groups[i].limit%>">
+                                  Members
+                                 </a>
+                                 <a href="/delete-group/<%= groups[i]._id%>" ><i class="fa fa-trash"></i></a>
+                                 
+                              </span>
+                           </li>
+                          <% }%>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-8">
+               
+            </div>
+         </div>
+ </ul>
+
+<!--Add Member Model -->
+   <!-- Modal -->
+    <!-- Created Modal -->
+  <div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLongTitle">Add Members</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+      <!-- model form adding group -->
+       <form action="" id="add-member-form">
+           <div class="modal-body">
+               <input type="hidden" name="group_id" id="group_id">
+               <input type="hidden" name="limit" id="limit">
+               <div class="oldmembers">
+
+               </div>
+              </div>
+              <div class="form-group" style="height: 200px; overflow: scroll;">
+                  <!-- add members -->
+                  <table class="table table-inbox table-hover">
+                    <tbody class="add-member-table">
+                      
+                     </tbody>
+                 </table>
+                 <!-- end  members -->
+              </div>
+              <div class="modal-footer">
+               <p id="add-member-error" class="text-danger"></p>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add new Members</button>
+              </div> 
+       </form>
+      <!-- end adding group modal form  -->
+     </div>
+   </div>
+ </div>
+ <!-- end add created Model -->
+<!-- end Add member model -->
+
+
+  <!--Group Created Modal -->
+  <div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Create New Group</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       <!-- model form adding group -->
+        <form action=""  method="POST">
+            <div class="modal-body">
+               <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Enter Group Name" required>
+               </div>
+                <div class="form-group">
+                    <input type="number" name="limit" id="" min="1" class="form-control" placeholder="Limit group member" required>
+                </div>
+               </div>
+               <div class="form-group" style="height: 150px; overflow: scroll;">
+                   <!-- add members -->
+                   <table class="table table-inbox table-hover">
+                     <tbody>
+                        <% for (let i= 0; i < users.length; i++ ) {%>
+                                 <tr>
+                                    <td class="inbox-small-cells">
+                                       <div class="custom-control custom-checkbox">
+                                         <div class="form-check">
+                                          <input class="form-check-input" name="members" type="checkbox" value="<%= users[i]._id%>" id="flexCheckDefault">
+                                          <label class="form-check-label" for="flexCheckDefault">
+                                             <img src="images/layout_img/msg2.png" class="img mx-2" alt="#"  style="width: 40px;
+                                             border-radius: 50%;
+                                             border: 2px solid blue;"/>
+                                             
+                                              <span class="text-primary"><b> <%= users[i].name%></b></span>
+                                          </label>
+                                        </div>
+                                          
+                                       </div>
+                                       
+                                    </td>
+                                    
+                                 </tr>
+                                 <% }%>
+                              </tbody>
+                  </table>
+                  <!-- end  members -->
+               </div>
+               <div class="modal-footer">
+            
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                 <button type="submit" class="btn btn-primary">Create</button>
+               </div> 
+        </form>
+       <!-- end adding group modal form  -->
+      </div>
+    </div>
+  </div>
+  <!-- end group created Model -->
+                    </div>
+                  <!-- footer -->
+                  <div class="container-fluid">
+                     <div class="footer">
+                        <p>Copyright © 2018 Designed by html.design. All rights reserved.<br><br>
+                           Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+               <!-- end dashboard inner -->
+            </div>
+         </div>
+      </div>
+    
+      
+      <!-- jQuery -->
+      <!-- <script src="/js/jquery.min.js"></script> -->
+      <script src="/js/popper.min.js"></script>
+      <script src="/js/bootstrap.min.js"></script>
+      <!-- wow animation -->
+      <script src="/js/animate.js"></script>
+      <!-- select country -->
+      <script src="/js/bootstrap-select.js"></script>
+    
+      <script src="/js/utils.js"></script>
+      <script src="/js/analyser.js"></script>
+      <!-- nice scrollbar -->
+      <script src="/js/perfect-scrollbar.min.js"></script>
+      <script>
+         var ps = new PerfectScrollbar('#sidebar');
+      </script>
+      <!-- custom js -->
+      <script src="/js/custom.js"></script>
+      <script src="/js/chart_custom_style1.js"></script>
+        <!-- Custom jqurey for chat Box -->
+        
+      <script>
+         // add Member Js
+         $('.add-member').click(function(){
+            let id= $(this).attr('data-id')
+            let limit= $(this).attr('data-limit');
+               $('#group_id').val(id);
+               $('#limit').val(limit);
+
+               $.ajax({
+                  url:'/get-members',
+                  type:'POST',
+                  data:{group_id:id},
+                  success: function(res){
+                     if(res.success == true){
+                        let users= res.data;
+                        let member= res.member;
+                        let html=` `;
+                        // for existing user in group
+                           for (let j= 0; j< member.length; j++){
+                              html += `   
+                                 <b class="p-2 fa-1x">`+ member[j].name+`,</b>
+                                      
+                              `;
+                              $('.oldmembers').html(html);
+                           }
+                           // for new Users
+                        for ( let i =0; i< users.length; i++){
+                           html += `     
+                           <tr>
+                                   <td class="inbox-small-cells">
+                                      <div class="custom-control custom-checkbox">
+                                        <div class="form-check">
+                                         <input name="members" type="checkbox" value="` + users[i]._id +`" id="flexCheckDefault">
+                                         <label class="form-check-label" for="flexCheckDefault">
+                                            <img src="images/layout_img/msg2.png" class="img mx-2" alt="#"  style="width: 40px;
+                                            border-radius: 50%;
+                                            border: 2px solid blue;"/>
+                                            
+                                             <span class="text-primary"><b> `+ users [i] .name +`</b></span>
+                                         </label>
+                                       </div>
+                                         
+                                      </div>
+                                      
+                                   </td>
+                                   
+                                </tr>
+                           `;
+                           // end html
+                           // append html
+                           $('.add-member-table').html(html);
+                           
+                        }
+                     }
+                     else{
+                        alert(res.msg)
+                     }
+                  }
+               })
+         });
+
+
+         // adding members from submit code(button)
+         $('#add-member-form').submit(function(event){
+            event.preventDefault();
+            let formData= $(this).serialize();
+
+            $.ajax({
+               url:"/add-members",
+               type:"POST",
+               data:formData,
+               success:function(res){
+                  if(res.success){
+                     $('#memberModal').modal('hide');
+                     $('#add-member-form')[0].reset();
+                     alert(res.msg)
+                  }
+                  else{
+                     $('#add-member-error').text(res.msg)
+                     setTimeout(() => {
+                              $('#add-member-error').text()
+                           }, 300);
+                  }
+               }
+            })
+
+         })
+
+      </script>
+
+
+   </body>
+</html>
