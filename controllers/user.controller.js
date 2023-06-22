@@ -89,13 +89,14 @@ const Logout= async (req,res)=>{
 const saveChat= async (req,res)=>{
     const {sender_id, reciver_id, message}= req.body;
     const user= await User.findById({_id:sender_id});
+    const reciver= await User.findById({_id:sender_id});
     const chatMessage= new Chat({
         sender_id:sender_id,
         reciver_id:reciver_id,
         message:message
     });
    const newChat= await chatMessage.save();
-    res.send({success:true,data:newChat,user:user});
+    res.send({success:true,data:newChat,user:user,reciver:reciver});
     
 }
 

@@ -10,7 +10,7 @@ const path= require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static( path.join(__dirname, 'uploads')))
 
-mongoose.connect('mongodb+srv://mark:mark2022.aa@cluster0.jp9mo9v.mongodb.net/?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://mark:aaaaa@cluster0.8hpi9si.mongodb.net/?retryWrites=true&w=majority');
 
 const bodyParser= require('body-parser');
 const session= require('express-session')
@@ -57,19 +57,21 @@ usp.on('connection',async (socket)=>{
 
     });
     // chatting Implement
-    socket.on('newChat', (data)=>{
-        socket.broadcast.emit('loadNewChat', data)
+    socket.on('newChat', ({data,reciver})=>{
+        socket.broadcast.emit('loadNewChat', {data,reciver})
     });
 
     //loading Old Chat data
     socket.on('exitChat',async (data)=>{
+        let senderUser= await User.findById({ _id:data.sender_id});
+        let reciveUser= await User.findById({_id:data.reciver_id})
        let chats= await Chat.find({
             $or:[
                 {sender_id:data.sender_id, reciver_id:data.reciver_id},
                 {sender_id:data.reciver_id, reciver_id:data.sender_id}
             ]
         });
-        socket.emit('loadChats',{chats:chats})
+        socket.emit('loadChats',{chats:chats,senderUser:senderUser,reciveUser:reciveUser})
     })
 
     //deleted Chat
