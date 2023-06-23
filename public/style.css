@@ -837,8 +837,8 @@ span {
 }
 
 #sidebar {
-    min-width: 280px;
-    max-width: 280px;
+    min-width: 200px;
+    max-width: 200px;
     background-color: #15283c;
     color: #fff;
     transition: all 0.3s;
@@ -932,7 +932,8 @@ a[data-toggle="collapse"] {
     min-height: 100vh;
     transition: ease all 0.3s;
     position: relative;
-    padding: 60px 25px 25px 305px;
+    padding-left: 200px;
+    padding-top: 50px;
     background: #f8f8f8;
 }
 

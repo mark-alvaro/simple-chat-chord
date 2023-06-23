@@ -19,6 +19,7 @@
       <link rel="stylesheet" href="/css/bootstrap.min.css" />
       <!-- site css -->
       <link rel="stylesheet" href="/style.css" />
+      <link rel="stylesheet" href="/chat.css" />
       <!-- responsive css -->
       <link rel="stylesheet" href="/css/responsive.css" />
       <!-- select bootstrap -->
@@ -30,6 +31,14 @@
       <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js" integrity="sha512-jMNwWSmjje4fjYut9MBGKXw5FZA6D67NHAuC9szpjbbjg51KefquNfvn4DalCbGfkcv/jHsHnPo1o47+8u4biA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    </head>
    <body class="dashboard dashboard_1">
       <div class="full_container">
@@ -43,8 +52,8 @@
                   <div class="sidebar_user_info">
                      <div class="icon_setting"></div>
                      <div class="user_profle_side">
-                        <div class="user_img">
-                           <img class="img-responsive" src="/uploads/<%= user.image%>" height="70px"/>
+                        <div class="user_im">
+                           <img class="img-responsive" src="/uploads/<%= user.image%>" style="border-radius:50% !important" height="70px" width="100%"/>
                         </div>
                         <div class="user_info">
                            <h6><%= user.name%></h6>
@@ -72,44 +81,112 @@
                <!-- dashboard inner -->
                <div class="midde_cont">
                   <div class="container-fluid">
-                     <h1 class="text-danger text-danger">Hi <%= user.name%></h1>
-                     <div class="row">
-                        <div class="col-md-3">
-                            <ul class="list-group">
-                                    <% for (let i= 0; i < users.length; i++ ) {%>
-                                        <li class="list-group-item list-group-item-dark user-list" style="cursor: pointer;" data-id="<%= users[i]._id%>">
-                                            <img src="/uploads/<%= users[i].image%>" alt="" width="40px" height="30px" style="border-radius: 50%;"> 
-                                            <% if( users[i].is_online == 1) {%>
-                                             <span class="online_animation" id="<%= users[i]._id%>"></span>
-                                          <%} else {%>
-                                          <%} %>
-                                            <%= users[i].name %>
-                                            
-                                        </li>
-                                    <% }%>
-                            </ul>
-                        </div>
-                        <div class="col-md-9">
-                            <h3 class="start-head">Click to start the chat</h3>
-                            <div class="chat-section" style="display: none;">
-                                <div id="chat-container" style="background-color: skyblue;width: 100%;
-                                height: 400px; overflow: scroll;">
-                                    <div class="m-5">
-                                      <!-- current user chat -->
-                                      
-                                      <!-- end current user chat -->
-                                      <!-- dynamic user chat -->
-                                      
-                                      <!-- end dynamic user chat -->
-                                    </div>
-                                </div>
-                                <form action="" id="chat-form" >
-                                    <input type="text" id="message" class="message w-50 border" placeholder="Enter message" required>
-                                    <button type="submit" class="btn btn-sm btn-success"> <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                                </form>
-                            </div>
+ 
+
+                       
+    <div class="col-md-12">
+ <!-- example Chat  -->
+        
+            <div class="row">
+               <div class="col-md-4 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+                  <div class="card-header">
+                     <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" class="form-control search">
+                        <div class="input-group-prepend">
+                           <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                         </div>
                      </div>
+                  </div>
+                  <div class="card-body contacts_body">
+                     <ui class="contacts">
+                    
+                     <% for (let i= 0; i < users.length; i++ ) {%>
+                        <li class="user-list" data-id="<%= users[i]._id%>" style="cursor:pointer" data-name="<%= users[i].name %>">
+                           <div class="d-flex bd-highlight">
+                              <div class="img_cont">
+                                 <img src="/uploads/<%= users[i].image%>" alt="" class="rounded-circle user_img" style="border:none !"> 
+                                 <% if( users[i].is_online == 1) {%>
+                                    <span class="online_icon" id="<%= users[i]._id%>"></span>
+                                 <%} else {%>
+                                    <span class="offline" ></span>
+                                 <%} %>
+                                
+                              </div>
+                              <div class="user_info">
+                                 <span> <%= users[i].name %></span>
+                                 <p> <% if( users[i].is_online == 1) {%>
+                                    <%= users[i].name%> is online
+                                 <%} else {%>
+                                    <%= users[i].name%> is left
+                                 <%} %></p>
+                              </div>
+                           </div>
+                        </li>
+                    <% }%>
+                     </ui>
+                  </div>
+                
+               </div>
+            </div>
+               <div class="col-md-8 chat">
+                  <h3 class="start-head">Click to start the chat</h3>
+                  <div class="chat-section" style="display: none;">
+                     <div class="card">
+                    
+                        <div class="card-header msg_head fixed">
+                           <div class="d-flex bd-highlight">
+                              <div class="img_cont">
+                                 <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                 <span class="online_icon"></span>
+                              </div>
+                              <div class="user_info">
+                                 <span id="user_line_name"></span>
+                                 <p>1767 Messages</p>
+                              </div>
+                              <div class="video_cam">
+                                 <span><i class="fas fa-video"></i></span>
+                                 <span><i class="fas fa-phone"></i></span>
+                              </div>
+                           </div>
+                           <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                           <div class="action_menu">
+                              <ul>
+                                 <li><i class="fas fa-user-circle"></i> View profile</li>
+                                 <li><i class="fas fa-users"></i> Add to close friends</li>
+                                 <li><i class="fas fa-plus"></i> Add to group</li>
+                                 <li><i class="fas fa-ban"></i> Block</li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="card-body" id="chat-container" style="overflow: scroll;">
+                          
+                        </div>
+                      <div class="card-footer fixed">
+                        <form action="" id="chat-form" >
+                        <div class="input-group">
+                           <div class="input-group-append">
+                              <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                           </div>
+                           <textarea id="message" class="form-control type_msg message" placeholder="Type your message..." required></textarea>
+                           <div class="input-group-append">
+                              <button type="submit" class="btn btn-sm btn-success"> <i class="fas fa-location-arrow" aria-hidden="true"></i></button>
+                              
+                           </div>
+                        </div>
+                     </form>
+                     </div>
+                  </div>
+                    
+               </div>
+                  </div>
+                  
+
+              
+            </div>
+      
+         <!-- end example Chat -->
+  </div>
+
                   </div>
                   <!-- footer -->
                   <div class="container-fluid">
@@ -119,6 +196,13 @@
                         </p>
                      </div>
                   </div>
+
+
+
+                 
+
+
+
                </div>
                <!-- end dashboard inner -->
             </div>
@@ -140,7 +224,7 @@
                   <div class="modal-body">
                      <input type="hidden" name="id" id="delete-message-id">
                      <p class="text-danger">Are you Sure to delete this Message?</p>
-                     <p><b id="delete-message"></b></p>
+                   
                    </div>
                    <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -173,6 +257,9 @@
             </div>
             </div>
          </div>
+
+
+        
       <!-- jQuery -->
       <!-- <script src="/js/jquery.min.js"></script> -->
       <script src="/js/popper.min.js"></script>
@@ -194,7 +281,11 @@
       <script src="/js/chart_custom_style1.js"></script>
         <!-- Custom jqurey for chat Box -->
         <script>
-
+         $(document).ready(function(){
+                     $('#action_menu_btn').click(function(){
+                        $('.action_menu').toggle();
+                     });
+                        });
          
             const socket= io('/user-namespace',{
                auth:{
@@ -210,12 +301,13 @@
                 $('.user-list').click(function(){
                   // getting senderId
                   let userId= $(this).attr('data-id');
+                  let username= $(this).attr('data-name');
                      reciver_id= userId
-
+                     $('#user_line_name').val('Mark Forster');
                     $('.start-head').toggleClass('bb');
                     $('.chat-section').toggleClass('aa');
 
-                    socket.emit('exitChat',{sender_id:sender_id, reciver_id:reciver_id})
+                    socket.emit('exitChat',{sender_id:sender_id, reciver_id:reciver_id, name:name})
                 })
             });
 
@@ -249,16 +341,37 @@
                         let user= response.user.image;
                         
                         let html=`
-                           <div class="" id='`+ response.data._id +`'>
-                              <img src="/uploads/`+ user +`" class="mx-2"  width="30px" height="30px" style="float:right; border-radius:50%;"/>
-                              <h6 class="my-5"><span class="bg-primary p-2 float-right" style="border-radius: 5px;">`+ chat +`</span>
-                                 </h6>
-                                 <i class=" fa fa-trash user-trash text-danger float-right" data-toggle="modal" data-target="#deleteChatModel" data-id='`+ response.data._id +`' ></i>
-
-                                 <i class="fa fa-edit  text-primary float-right" data-toggle="modal" data-target="#editChatModel" data-id='`+ response.data._id +`' data-msg='`+ chat +`'></i>
+                           
+             <div id='`+ response.data._id +`'>
+						<div class="msg_card_body">
+							<div class="d-flex justify-content-end mb-4">
+								
+                        <div class="dropdown_section" style="margin: 10px -6px;">
+                                                <div class="dropdown dropleft">
+                                                   <i type="button" class="fa fa-ellipsis-v" data-toggle="dropdown" ></i>
+                                                   <div class="dropdown-menu">
+                                                      <a  class="edit  text-primary" data-toggle="modal" data-target="#editChatModel" data-id='`+ response.data._id +`' data-msg='`+ chat +`' style="cursor:pointer;margin-right:32px;">Edit Message</a>
+                                                     
+                                                      <a class=" trash user-trash text-danger" data-toggle="modal" data-target="#deleteChatModel" data-id='`+ response.data._id +`' style="cursor:pointer; margin-right:12px;">Delete Message</a>
+                                                     
+                                                      
+                                                   </div>
+                                                </div>
+                                
                            </div>
-                           <br>
-                        `;
+								<div class="msg_cotainer">
+									`+ chat +`
+								</div>
+                        <div class="img_cont_msg">
+									<img src="/uploads/`+ user +`" class="rounded-circle user_img_msg">
+								</div>
+							</div>
+							
+							
+						</div>
+					
+					</div> `;
+               // heml end
                         $('#chat-container').append(html);
                         socket.emit('newChat', {data:response.data,reciver:response.reciver })
                         scrollChat()
@@ -277,14 +390,19 @@
             if(sender_id === data.reciver_id && reciver_id == data.sender_id){
                
                let html=`
-               <div class="" id='`+ data._id +`' style="display:flex">
-                  <img src="/uploads/`+ image +`" class="mx-2"  width="30px" height="30px" style="border-radius:50%;"/>
-                  <h6 class=""><span class="bg-primary p-2 " style="border-radius: 5px;">
-                  `+ data.message +`
-               </span>
-               </h6>   
-               </div>
-               <br>
+               
+               <div class="msg_card_body" id='`+ data._id +`'>
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+                           <img src="/uploads/`+ image +`" class=""  width="30px" height="30px" style="border-radius:50%;"/>
+								</div>
+								<div class="msg_cotainer">
+                           `+ data.message +`
+								</div>
+							</div>
+							
+							
+						</div>
                `;
                $("#chat-container").append(html);
                scrollChat()
@@ -303,38 +421,53 @@
                let addClass='';
                if(chats[i].sender_id === sender_id){
                   
-                  html += `
-                  <div class="float-right d-flex">
-                     <div class="current-user-chat" id='`+ chats[i]._id+`'>
-                     <h6 class="my-1"> 
-                     <span class="bg-primary p-2 user" style="border-radius: 5px;"> `+chats[i].message+` </span>
-                     </h6>
-                     </div>
-                     <img src="/uploads/`+ data.senderUser.image  +`" class="mx-2 mt-2 float-right"  width="30px" height="30px" style="border-radius:50%;"/>
-                  </div>
-                  <br>`;
+                  html += `      
+                     <div class="d-flex justify-content-end mb-4 " id='`+ chats[i]._id+`'>
+								
+                        <div class="dropdown_section" style="margin: 10px -6px;">
+                                                <div class="dropdown dropleft">
+                                                   <i type="button" class="fa fa-ellipsis-v" data-toggle="dropdown" ></i>
+                                                   <div class="dropdown-menu">
+                                                      <a  class="edit  text-primary" data-toggle="modal" data-target="#editChatModel" data-id='`+ chats[i]._id+`' data-msg='`+chats[i].message+`' style="cursor:pointer;margin-right:32px;">Edit Message</a>
+                                                     
+                                                      <a class="trash user-edit text-danger " data-id='`+ chats[i]._id+`' data-toggle="modal" data-msg="`+ chats[i].message +`" data-target="#deleteChatModel" style="cursor:pointer; margin-right:12px;">Delete Message</a>
+                                                     
+                                                      
+                                                     
+                                                      
+                                                   </div>
+                                                </div>
+                                
+                           </div>
+								<div class="msg_cotainer">
+									`+chats[i].message+`
+								</div>
+                        <div class="img_cont_msg">
+									<img src="/uploads/`+ data.senderUser.image +`" class="rounded-circle user_img_msg">
+								</div>
+							</div>
+							
+
+                  `;
+                  // html end
                }
                else{
                   html += `
-                  <div class="mt-3 mx-3">
-                     <div class="d-flex dynamic-user-chat" id='`+ chats[i]._id+`'>
-                        <img src="/uploads/`+ data.reciveUser.image  +`" class="mx-2 mt-2"  width="30px" height="30px" style="border-radius:50%;"/>
-                     <h6 class="my-1"> 
-                     <span class="bg-primary p-2 user" style="border-radius: 5px;"> `+chats[i].message+` </span>
-                  </h6>
-                  </div>
-            </div>
-            <br>`;
+            <div class="msg_card_body" id='`+ chats[i]._id+`'>
+							<div class="d-flex justify-content-start mb-4">
+								<div class="img_cont_msg">
+                           <img src="/uploads/`+ data.reciveUser.image +`" class="mt-2"  width="30px" height="30px" style="border-radius:50%;margin-right:5px;"/>
+								</div>
+								<div class="msg_cotainer">
+                           `+chats[i].message+` 
+								</div>
+							</div>
+							
+							
+						</div>
+            `;
                }
                
-                
-               
-               if(chats[i].sender_id === sender_id){
-               html += ` <i class=" fa fa-trash user-trash text-danger float-right" data-id='`+ chats[i]._id+`' data-toggle="modal" data-target="#deleteChatModel"></i>
-               <i class=" fa fa-edit user-edit text-primary float-right" data-id='`+ chats[i]._id+`' data-toggle="modal" data-msg="`+ chats[i].message +`" data-target="#editChatModel"></i>
-               `;
-               
-            }
             
            }
            $('#chat-container').append(html);
@@ -344,9 +477,8 @@
 
 
          // delete chat work
-         $(document).on('click', '.fa-trash', function(){
-            let msg= $(this).parent().text();
-            $('#delete-message').text(msg);
+         $(document).on('click', '.trash', function(){
+           
             $("#delete-message-id").val($(this).attr('data-id'));
          });
 
@@ -372,7 +504,7 @@
 
 
          // Update User Chat Functionally
-         $(document).on('click', '.fa-edit', function(){
+         $(document).on('click', '.edit', function(){
             $('#edit-message-id').val($(this).attr('data-id'))
             $('#update-message').val($(this).attr('data-msg'))
          })
@@ -388,7 +520,7 @@
                success:(response)=>{
                   if(response.success == true){
                      $('#'+id).find('span').text(msg);
-                     $('#'+id).find('.fa-edit').attr('data-msg', msg)
+                     $('#'+id).find('.edit').attr('data-msg', msg)
                      $('#editChatModel').modal('hide')
                      socket.emit('chatUpdated',{id:id, message:msg})
                   }
